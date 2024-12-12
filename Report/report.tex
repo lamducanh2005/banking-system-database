@@ -1,0 +1,264 @@
+\documentclass[a4paper, 12pt]{report}
+\setlength{\parskip}{0.5em}
+
+\usepackage{graphicx}
+\usepackage[vietnamese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage[top=2cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage[many]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{pgfplots}
+\usepackage{tocloft}
+\usepackage{minted}
+\usepackage{tabularx}
+\usepackage[table,xcdraw]{xcolor}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={black!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+
+\title{Báo cáo Bài tập lớn}
+\author{Lâm Đức Anh}
+\date{December 2024}
+
+\newcommand{\chapnumfont}{%     % define font for chapter number
+  \usefont{T1}{pnc}{b}{n}%      % choose New Chancery, bold, normal shape
+  \fontsize{75}{75}%          % font size 100pt, baselineskip 100pt
+  \selectfont%                  % activate font
+}
+\colorlet{chapnumcol}{gray!100}  % color for chapter number
+
+\titleformat{\chapter}[display]
+{\filleft\bfseries}
+{\filleft\chapnumfont\textcolor{chapnumcol}{\thechapter}}
+{-24pt}
+{\Huge}
+
+\setlength{\cftchapnumwidth}{3em}
+\setlength{\cftbeforechapskip}{3em} 
+\setlength{\cftbeforesecskip}{1em}
+\setlength{\cftbeforesubsecskip}{0.5em}
+
+
+
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\alph{subsection}.}
+
+
+
+\begin{document}
+
+
+\begin{titlepage}
+
+    \begin{center}
+
+        % Phần trên cùng
+        \textbf{\large Đại học Quốc gia Hà Nội}\\[0.2cm]
+        \textbf{\large Trường Đại học Công nghệ}\\[1cm]
+
+        \includegraphics[width=0.2\textwidth]{UET.png}\\[2.5cm]
+
+        % Phần ở giữa
+        \textbf{\Huge BÁO CÁO BÀI TẬP LỚN}\\[0.5cm]
+        \textbf{\Large Bài tập lớn Cơ sở dữ liệu}\\[2.5cm]
+        
+        
+    \end{center}
+    \vfill
+    \begin{center}
+        \textbf{\large Hà Nội, 2024}
+    \end{center}
+    
+\end{titlepage}
+
+\tableofcontents % Tạo mục lục
+
+\newpage % Sang trang mới sau mục lục
+
+
+\chapter{Đề tài}
+
+\section{Lý do chọn đề tài}
+
+\setlength{\parindent}{2em}
+
+Trong thời đại công nghệ số hiện nay, các ngân hàng đang ngày càng phụ thuộc vào việc ứng dụng công nghệ thông tin để nâng cao hiệu quả hoạt động và chất lượng dịch vụ. 
+Một trong những yếu tố cốt lõi để hỗ trợ các hoạt động này chính là hệ thống cơ sở dữ liệu. 
+Tuy nhiên, sự phức tạp của các nghiệp vụ ngân hàng như quản lý thông tin khách hàng hay xử lý giao dịch tài chính đòi hỏi các giải pháp cơ sở dữ liệu không chỉ đảm bảo hiệu suất mà còn phải đáp ứng các yêu cầu nghiêm ngặt về tính chính xác và an toàn.
+
+Vì vậy, nhóm đã lựa chọn đề tài \textbf{Xây dựng cơ sở dữ liệu cho Hệ thống quản lý ngân hàng}. 
+Việc chọn đề tài này xuất phát từ nhu cầu thực tiễn trong ngành, khi mà các ngân hàng cần một nền tảng dữ liệu mạnh mẽ để quản lý khối lượng thông tin ngày càng lớn, hỗ trợ ra quyết định kịp thời và tối ưu hóa trải nghiệm người dùng. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{CentralBank.png}
+\end{figure}
+
+
+\section{Phát biểu bài toán}
+
+\textbf{Cơ sở dữ liệu dành cho hệ thống quản lý ngân hàng} được xây dựng nên để thực hiện các nhiệm vụ như lưu trữ thông tin khách hàng, quản lý 
+tài khoản, xử lý các giao dịch, theo dõi các khoản vay và rủi ro tài chính, quản lý hiệu suất làm việc của nhân viên và mỗi chi nhánh trong hệ thống ngân hàng.
+
+
+% \newpage
+\section{Mô tả nghiệp vụ hệ thống}
+
+Nhìn chung, một hệ thống quản lý ngân hàng sẽ bao gồm các nghiệp vụ sau đây:
+
+\begin{enumerate}[leftmargin=2cm]
+
+    \item \textbf{Quản lý khách hàng}: Lưu trữ thông tin cá nhân của mỗi khách hàng tại ngân hàng.
+    Mỗi khách hàng là một cá nhân duy nhất và họ có thể mở nhiều tài khoản khác nhau.
+    Mỗi người họ cũng có thể có những đặc điểm tài chính khác nhau và những thông tin này cần được lưu trữ để quản trị rủi ro tài chính cho ngân hàng.
+    
+    \item \textbf{Quản lý tài khoản}: Lưu trữ thông tin các tài khoản tại ngân hàng.
+    Mỗi tài khoản là một tài sản của khách hàng nào đó gửi tại ngân hàng, chỉ được gắn với một khách hàng duy nhất.
+    Tài khoản ngân hàng cũng chính là phương tiện để một khách thanh toán, nên đi kèm với tài khoản ngân hàng sẽ có những thông tin như số dư, loại hình và lịch sử giao dịch.
+    
+    \item \textbf{Quản lý giao dịch}: Giao dịch là nhật ký ghi lại những biến động về số dư và hướng đi của nguồn tiền trong ngân hàng.
+    Mọi hoạt động tài chính của mỗi khách hàng cần phải được ghi nhận, xử lý, lưu trữ một cách chính xác và minh bạch.
+    Hệ thống phải có khả năng ghi nhận các loại giao dịch khác nhau như chuyển khoản, nộp tiền, rút tiền, v.v.
+    Mỗi giao dịch gắn với các thông tin như mã giao dịch, thời gian thực hiện, số tài khoản nguồn và đích, số tiền giao dịch và trạng thái giao dịch.
+    
+    \item \textbf{Quản lý sản phẩm tài chính}: Khi cung cấp đa dạng các dịch vụ và tiếp cận đến nhiều đối tượng khách hàng thì đòi hỏi phải có sự lưu trữ thông tin các sản phẩm này.
+    Khi khách hàng mở tài khoản, thì tài khoản đó sẽ ứng với một sản phẩm tài chính nhất định.
+    Ngân hàng có thể cung cấp nhiều loại sản phẩm tài chính khác nhau như tài khoản tiết kiệm, gói vay, thẻ tín dụng, v.v.
+    Mỗi sản phẩm sẽ có những đặc điểm khác nhau về lãi suất, kỳ hạn và điều kiện tài chính.
+    
+    \item \textbf{Quản lý nhân viên và chi nhánh}: Ngân hàng được vận hành và quản lý bởi các nhân viên làm việc tại ngân hàng.
+    Mỗi nhân viên phụ trách những công việc khác nhau, chủ yếu là thực hiện xử lý các giao dịch.
+    Ngoài ra, ngân hàng cũng có các chi nhánh khác nhau, là nơi để các nhân viên làm việc và để khách hàng mở tài khoản.
+    Việc quản lý nhân viên và chi nhánh bao gồm theo dõi công việc, đánh giá hiệu suất của mỗi nhân viên và chi nhánh.
+
+    
+\end{enumerate}
+
+
+\chapter{Mô hình của hệ thống}
+
+\section{Mô hình ER}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{ER-Diagram.png}
+    \caption{Sơ đồ mô hình thực thể - quan hệ}
+    \label{fig:br-wm-2020}
+\end{figure}
+
+\section{Mô hình quan hệ}
+
+
+\chapter{Đặc tả dữ liệu}
+
+\section{Dữ liệu tại mỗi bảng}
+
+\input{Chapter3Section1}
+
+
+
+% \section{Dữ liệu tại mỗi bảng}
+
+% % \subsection{Dữ liệu Khách hàng}
+
+% Dữ liệu khách hàng được lưu trữ tại bảng \textbf{customers} với các trường dữ liệu sau:
+
+% \renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+% \setlength{\tabcolsep}{10pt}
+
+% \begin{center}
+%     \begin{tabular}{ | m{7em} | m{15em}| m{5em} | m{5em} | } 
+%     \hline
+%     \rowcolor{gray!30}
+%     Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+%     \hline
+%     \textbf{customerID} &
+%     Mã định danh cho mỗi khách hàng tại ngân hàng, gồm 8 kí tự. &
+%     varchar &
+%     23020346 \\
+
+%     \hline
+%     \textbf{lastName} &
+%     Họ của khách hàng &
+%     varchar &
+%     Trần \\
+
+%     \hline
+%     \textbf{firstName} &
+%     Tên của khách hàng &
+%     varchar &
+%     Minh Huy \\
+
+%     \hline
+%     \textbf{birthDate} &
+%     ... &
+%     ... &
+%     ... \\
+
+%     \hline
+%     \textbf{} &
+%     ... &
+%     ... &
+%     ... \\
+
+%     \hline
+%     \textbf{} &
+%     ... &
+%     ... &
+%     ... \\
+
+%     \hline
+%     \textbf{} &
+%     ... &
+%     ... &
+%     ... \\
+
+%     \hline
+%     \end{tabular}
+% \end{center}
+    
+
+
+% % \subsection{Dữ liệu Tài khoản}
+
+% % \subsection{Dữ liệu Giao dịch}
+
+% % \subsection{Dữ liệu Sản phẩm tài chính}
+
+% % \subsection{Dữ liệu Nhân viên}
+
+% % \subsection{Dữ liệu Chi nhánh}
+
+\section{Mối quan hệ giữa các bảng}
+
+Cơ sở dữ liệu có các mối quan hệ sau:
+
+\begin{itemize}[leftmargin=2cm]
+    \item Giữa bảng \textbf{customers} và \textbf{accounts} có mối quan hệ được liên kết bởi trường
+\end{itemize}
+
+\chapter{Cài đặt}
+
+\section{Tạo cơ sở dữ liệu và chèn dữ liệu}
+
+\input{Chapter4Section1.tex}
+
+\section{Truy vấn dữ liệu}
+
+\section{Ràng buộc dữ liệu bằng trigger}
+
+\section{Giải quyết nghiệp vụ bằng procedures}
+
+\end{document}
