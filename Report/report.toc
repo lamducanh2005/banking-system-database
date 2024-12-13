@@ -11,6 +11,6 @@
 \contentsline {section}{\numberline {2.}Mối quan hệ giữa các bảng}{5}{section.3.2}%
 \contentsline {chapter}{\numberline {IV}Cài đặt}{6}{chapter.4}%
 \contentsline {section}{\numberline {1.}Tạo cơ sở dữ liệu và chèn dữ liệu}{6}{section.4.1}%
-\contentsline {section}{\numberline {2.}Truy vấn dữ liệu}{6}{section.4.2}%
-\contentsline {section}{\numberline {3.}Ràng buộc dữ liệu bằng trigger}{6}{section.4.3}%
-\contentsline {section}{\numberline {4.}Giải quyết nghiệp vụ bằng procedures}{6}{section.4.4}%
+\contentsline {section}{\numberline {2.}Truy vấn dữ liệu}{8}{section.4.2}%
+\contentsline {section}{\numberline {3.}Ràng buộc dữ liệu bằng trigger}{8}{section.4.3}%
+\contentsline {section}{\numberline {4.}Giải quyết nghiệp vụ bằng procedures}{8}{section.4.4}%

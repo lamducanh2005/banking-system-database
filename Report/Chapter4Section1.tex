@@ -7,6 +7,8 @@
   extendedchars=true,                % Hỗ trợ ký tự đặc biệt
 }
 
+
+
 \begin{enumerate}[label=\alph*.]
 
     \item Tạo cơ sở dữ liệu:
@@ -144,43 +146,5 @@
 
     \item Chèn dữ liệu
 
-    % \begin{figure}[H]
-    %     %\centering
-    %     \includegraphics[width=\textwidth]{sample-insert.png}
-    %     \caption{Một số ví dụ chèn dữ liệu vào các bảng.}
-    %     \label{fig:sql-insert}
-    % \end{figure}
-
-    \begin{lstlisting}
-    INSERT INTO branches
-    (branchCode, branchName, province, district, street)
-    VALUES
-    ('DN001', 'Chi nhánh Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Số 129, đường Lê Lợi');
-
-    INSERT INTO products
-    (productCode, productType, interestRate, term, minAmount, maxAmount)
-    VALUES 
-    ('CA', 'Checking', -0.01, 1, 0, NULL);
-
-    INSERT INTO employees
-    (employeeCode, lastName, firstName, position, department, managerCode, branchCode)
-    VALUES 
-    ('14A-0001', 'Nguyễn', 'Thế Phương', 'Nhân viên giao dịch', 'Phòng giao dịch', '14A-0005', 'QN001');
-
-    INSERT INTO customers
-    (customerID, lastName, firstName, birthDate, phoneNumber, address, creditScore)
-    VALUES
-    ('110234', 'Nguyễn', 'Văn An', '2003-01-04', '0347894216', 'Long Biên, Hà nội', 550);
-
-    INSERT INTO accounts
-    (accountNumber, accountName, balance, customerID, productCode, openingBranch, openingDate)
-    VALUES
-    ('52671032', 'NGUYEN VAN AN', 41560000, '110234', 'CA', 'HN005', '2014-06-12 09:35:32');
-
-    INSERT INTO transactions
-    (transactionNumber, sourceAccount, targetAccount, transactionType, amount, time, description, employeeCode)
-    VALUES
-    (21, '52671032', NULL, 'DEPOSIT', 140000, '2014-12-12 15:24:59', 'Gui tien', '30B-6432');
-    \end{lstlisting}
  
 \end{enumerate}
