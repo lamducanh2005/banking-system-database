@@ -1,185 +1,188 @@
-\lstset{
-  language=SQL,                      % Chọn ngôn ngữ SQL
-  basicstyle=\ttfamily\footnotesize, % Font không chân và nhỏ gọn
-  keywordstyle=\color{blue},         % Màu xanh cho từ khóa
-  stringstyle=\color{red},           % Màu đỏ cho chuỗi ký tự
-  frame=single,                      % Viền đơn quanh đoạn mã
-  extendedchars=true,                % Hỗ trợ ký tự đặc biệt
+\newminted[MySQLCode]{sql}{
+    frame=single, % Viền bao quanh mã
+    framesep=2mm, % Khoảng cách giữa mã và viền
+    fontsize=\scriptsize, % Kích thước chữ nhỏ hơn  footnotesize
+    baselinestretch=1.1, % Dãn dòng vừa phải
+    breaklines, % Tự động xuống dòng
+    tabsize=3, % Kích thước tab
+    autogobble % Loại bỏ khoảng trắng thừa
 }
 
+\begin{itemize}
 
+    \item Tạo cơ sở dữ liệu: 
+    \begin{MySQLCode}
+        CREATE DATABASE IF NOT EXISTS bank_db;
+    \end{MySQLCode}
 
-\begin{enumerate}[label=\alph*.]
+    \item Tạo bảng \texttt{accounts}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.accounts (
+            accountNumber VARCHAR(256) NOT NULL PRIMARY KEY,
+            accountName   VARCHAR(256) NOT NULL,
+            balance       BIGINT       NOT NULL,
+            customerID    VARCHAR(50)  NULL,
+            productCode   VARCHAR(256) NULL,
+            openingBranch VARCHAR(50)  NULL,
+            openingDate   DATETIME DEFAULT (NOW()) NULL
+        );
+    \end{MySQLCode}
 
-    \item Tạo cơ sở dữ liệu:
-    
-    \begin{lstlisting}
-    CREATE DATABASE IF NOT EXISTS bank_db;
-    \end{lstlisting}
-    
-    \noindent{\textbullet\ Bảng branches:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.branches (
-        branchCode VARCHAR(50)  NOT NULL 
-            PRIMARY KEY,
-        branchName VARCHAR(256) NOT NULL,
-        province   VARCHAR(50)  NULL,
-        district   VARCHAR(50)  NULL,
-        street     VARCHAR(256) NULL
-    );
-    \end{lstlisting}
+    \item Tạo bảng \texttt{branches}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.branches (
+            branchCode VARCHAR(50)  NOT NULL PRIMARY KEY,
+            branchName VARCHAR(256) NOT NULL,
+            province   VARCHAR(50)  NULL,
+            district   VARCHAR(50)  NULL,
+            street     VARCHAR(256) NULL
+        );
+    \end{MySQLCode}
 
-    \noindent{\textbullet\ Bảng customers:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.customers (
-        customerID  VARCHAR(50)  NOT NULL 
-            PRIMARY KEY,
-        lastName    VARCHAR(50)  NOT NULL,
-        firstName   VARCHAR(50)  NOT NULL,
-        birthDate   DATE         NOT NULL,
-        phoneNumber VARCHAR(15)  NULL,
-        address     VARCHAR(256) NULL,
-        creditScore INT          NULL
-    );
-    \end{lstlisting}
+    \item Tạo bảng \texttt{customers}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.customers (
+            customerID  VARCHAR(50)  NOT NULL PRIMARY KEY,
+            lastName    VARCHAR(50)  NOT NULL,
+            firstName   VARCHAR(50)  NOT NULL,
+            birthDate   DATE         NOT NULL,
+            phoneNumber VARCHAR(15)  NULL,
+            address     VARCHAR(256) NULL,
+            creditScore INT          NULL
+        );
+    \end{MySQLCode}
+
+    \item Tạo bảng \texttt{employees}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.employees (
+            employeeCode VARCHAR(50)  NOT NULL PRIMARY KEY,
+            lastName     VARCHAR(50)  NOT NULL,
+            firstName    VARCHAR(50)  NOT NULL,
+            position     VARCHAR(256) NULL,
+            department   VARCHAR(256) NULL,
+            managerCode  VARCHAR(50)  NULL,
+            branchCode   VARCHAR(50)  NULL
+        );
+    \end{MySQLCode}
+
+    \item Tạo bảng \texttt{products}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.products (
+            productCode  VARCHAR(50)  NOT NULL PRIMARY KEY,
+            productType  VARCHAR(256) NULL,
+            interestRate FLOAT        NULL,
+            term         INT          NULL,
+            minAmount    BIGINT       NULL,
+            maxAmount    BIGINT       NULL
+        );
+    \end{MySQLCode}
+
+    \item Tạo bảng \texttt{transactions}:
+    \begin{MySQLCode}
+        CREATE TABLE IF NOT EXISTS bank_db.transactions (
+            transactionNumber INT AUTO_INCREMENT PRIMARY KEY,
+            sourceAccount     VARCHAR(50)  NULL,
+            targetAccount     VARCHAR(50)  NULL,
+            transactionType   VARCHAR(50)  NULL,
+            amount            BIGINT       NOT NULL,
+            time              DATETIME     DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            description       VARCHAR(256) NULL,
+            employeeCode      VARCHAR(50)  NULL
+        );
+    \end{MySQLCode}
+
+    \item Tạo các ràng buộc dữ liệu:
+    \begin{MySQLCode}
+        ALTER TABLE bank_db.employees
+            ADD CONSTRAINT branch___fk
+                FOREIGN KEY (branchCode) REFERENCES bank_db.branches (branchCode),
+            ADD CONSTRAINT employees_managers__fk
+                FOREIGN KEY (managerCode) REFERENCES bank_db.employees (employeeCode);
+
+        ALTER TABLE bank_db.accounts
+            ADD CONSTRAINT customerID___fk
+                FOREIGN KEY (customerID) REFERENCES bank_db.customers (customerID),
+            ADD CONSTRAINT openingBranch___fk
+                FOREIGN KEY (openingBranch) REFERENCES bank_db.branches (branchCode),
+            ADD CONSTRAINT productCode___fk
+                FOREIGN KEY (productCode) REFERENCES bank_db.products (productCode);
+
+        ALTER TABLE bank_db.transactions
+            ADD CONSTRAINT sourceAccount___fk
+                FOREIGN KEY (sourceAccount) REFERENCES bank_db.accounts (accountNumber),
+            ADD CONSTRAINT targetAccount___fk
+                FOREIGN KEY (targetAccount) REFERENCES bank_db.accounts (accountNumber),
+            ADD CONSTRAINT transactions__fk
+                FOREIGN KEY (employeeCode) REFERENCES bank_db.employees (employeeCode);
+    \end{MySQLCode}
 
     \newpage
-
-    \noindent{\textbullet\ Bảng employees:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.employees (
-        employeeCode VARCHAR(50)  NOT NULL 
-            PRIMARY KEY,
-        lastName     VARCHAR(50)  NOT NULL,
-        firstName    VARCHAR(50)  NOT NULL,
-        position     VARCHAR(256) NULL,
-        department   VARCHAR(256) NULL,
-        managerCode  VARCHAR(50)  NULL,
-        branchCode   VARCHAR(50)  NULL
-    );
-    \end{lstlisting}
-
-    \noindent{\textbullet\ Bảng products:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.products (
-        productCode  VARCHAR(50)  NOT NULL 
-            PRIMARY KEY,
-        productType  VARCHAR(256) NULL,
-        interestRate FLOAT        NULL,
-        term         INT          NULL,
-        minAmount    BIGINT       NULL,
-        maxAmount    BIGINT       NULL
-    );
-    \end{lstlisting}
-
-    \noindent{\textbullet\ Bảng accounts:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.accounts (
-        accountNumber VARCHAR(256) NOT NULL 
-            PRIMARY KEY,
-        accountName   VARCHAR(256) NOT NULL,
-        balance       BIGINT       NOT NULL,
-        customerID    VARCHAR(50)  NULL,
-        productCode   VARCHAR(256) NULL,
-        openingBranch VARCHAR(50)  NULL,
-        openingDate   DATETIME DEFAULT (NOW()) NULL
-    );
-    \end{lstlisting}
-
-    \noindent{\textbullet\ Bảng transactions:}
-        
-    \begin{lstlisting}
-    CREATE TABLE IF NOT EXISTS bank_db.transactions (
-        transactionNumber INT AUTO_INCREMENT
-            PRIMARY KEY,
-        sourceAccount     VARCHAR(50)  NULL,
-        targetAccount     VARCHAR(50)  NULL,
-        transactionType   VARCHAR(50)  NULL,
-        amount            BIGINT       NOT NULL,
-        time              DATETIME DEFAULT 
-            CURRENT_TIMESTAMP NOT NULL,
-        description       VARCHAR(256) NULL,
-        employeeCode      VARCHAR(50)  NULL
-    );
-    \end{lstlisting}
-        
-    \newpage
-
-    \noindent{\textbullet\ Tạo các ràng buộc dữ liệu:}
-
-    \begin{lstlisting}
-    ALTER TABLE bank_db.employees
-        ADD CONSTRAINT branch___fk
-            FOREIGN KEY (branchCode) 
-            REFERENCES bank_db.branches (branchCode),
-        ADD CONSTRAINT employees_managers__fk
-            FOREIGN KEY (managerCode) 
-            REFERENCES bank_db.employees (employeeCode);
-
-    ALTER TABLE bank_db.accounts
-        ADD CONSTRAINT customerID___fk
-            FOREIGN KEY (customerID) 
-            REFERENCES bank_db.customers (customerID),
-        ADD CONSTRAINT openingBranch___fk
-            FOREIGN KEY (openingBranch) 
-            REFERENCES bank_db.branches (branchCode),
-        ADD CONSTRAINT productCode___fk
-            FOREIGN KEY (productCode) 
-            REFERENCES bank_db.products (productCode);
-
-    ALTER TABLE bank_db.transactions
-        ADD CONSTRAINT sourceAccount___fk
-            FOREIGN KEY (sourceAccount) 
-            REFERENCES bank_db.accounts (accountNumber),
-        ADD CONSTRAINT targetAccount___fk
-            FOREIGN KEY (targetAccount) 
-            REFERENCES bank_db.accounts (accountNumber),
-        ADD CONSTRAINT transactions__fk
-            FOREIGN KEY (employeeCode) 
-            REFERENCES bank_db.employees (employeeCode);
-    \end{lstlisting}
-
+    
     \item Chèn dữ liệu
+    \begin{MySQLCode}
+        INSERT INTO bank_db.accounts 
+        (accountNumber, accountName, balance, customerID, productCode, openingBranch, openingDate)
+        VALUES 
+        ('17560918', 'MAI TIEN DUNG', 150000000, '124040', 'SA-103', 'QN001', '2017-10-15 15:28:56'),
+        ('17563241', 'MAI TIEN DUNG', 195000000, '124040', 'SA-103', 'QN001', '2015-08-04 09:47:11'),
+        ('18224191', 'MAI TIEN DUNG', 225000000, '124040', 'SA-104', 'QN001', '2019-02-22 08:11:22'),
+        ('25710009', 'NONG TRUONG AN', 25500000, '110004', 'CA', 'ND001', '2022-04-07 13:55:11'),
+        ('27220369', 'DAO MINH THU', 2300000, '110003', 'CA', 'HN002', '2011-03-16 15:00:00');
+    \end{MySQLCode}
+
+    \begin{MySQLCode}
+        INSERT INTO bank_db.branches
+        (branchCode, branchName, province, district, street)
+        VALUES  
+        ('DN001', 'Chi nhánh Đà Nẵng', 'Đà Nẵng', 'Hải Châu', 'Số 129, đường Lê Lợi'),
+        ('HN001', 'Chi nhánh Cầu Giấy', 'Hà Nội', 'Cầu Giấy', 'Số 144, đường Xuân Thủy'),
+        ('HN002', 'Chi nhánh Thanh Xuân', 'Hà Nội', 'Thanh Xuân', 'Số 72, đường Nguyễn Trãi'),
+        ('HN003', 'Chi nhánh Đống Đa', 'Hà Nội', 'Đống Đa', 'Số 2, phố Tôn Thất Tùng'),
+        ('HN004', 'Chi nhánh Ba Đình', 'Hà Nội', 'Ba Đình', 'Số 57, phố Láng Hạ');
+    \end{MySQLCode}
+
+    \begin{MySQLCode}
+        INSERT INTO bank_db.customers
+        (customerID, lastName, firstName, birthDate, phoneNumber, address, creditScore)
+        VALUES
+        ('110003', 'Đào', 'Minh Thư', '1990-03-05', '0916125231', 'Thanh Xuân, Hà Nội', 750),
+        ('110004', 'Nông', 'Trường An', '2003-12-31', '0357386624', 'Trực Ninh, Nam Định', 450),
+        ('110013', 'Nguyễn', 'Trọng Đạt', '2002-02-25', '0347347845', 'Tam Kỳ, Quảng Nam ', 770),
+        ('120001', 'Lưu', 'Phương Thảo', '1993-10-08', '0165271019', 'Hạ Long, Quảng Ninh', 720),
+        ('124040', 'Mai', 'Tiến Dũng', '1990-12-15', '0914221312', 'Uông Bí, Quảng Ninh', 700);
+    \end{MySQLCode}
+
+    \begin{MySQLCode}
+        INSERT INTO bank_db.employees 
+        (employeeCode, lastName, firstName, position, department, managerCode, branchCode)
+        VALUES  
+        ('14A-0001', 'Nguyễn', 'Thế Phương', 'Nhân viên giao dịch', 'Phòng giao dịch', '14A-0005', 'QN001'),
+        ('14A-0002', 'Cà', 'Thị Lệ Quyên', 'Nhân viên giao dịch', 'Phòng giao dịch', '14A-0005', 'QN001'),
+        ('14A-0003', 'Nguyễn', 'Thị Huyền Trang', 'Nhân viên giao dịch', 'Phòng giao dịch', '14A-0005', 'QN001'),
+        ('14A-0004', 'Nguyễn', 'Dung Nhi', 'Nhân viên giao dịch', 'Phòng giao dịch', '14A-0005', 'QN001'),
+        ('14A-0005', 'Nguyễn', 'Tống Trọng', 'Trưởng phòng', 'Phòng giao dịch', '14A-0006', 'QN001');
+    \end{MySQLCode}
+
+    \begin{MySQLCode}
+        INSERT INTO bank_db.products 
+        (productCode, productType, interestRate, term, minAmount, maxAmount)
+        VALUES  
+        ('CA', 'Checking', -0.01, 1, 0, NULL),
+        ('CD-101', 'Credit', -0.5, 1, -1000000, NULL),
+        ('CD-102', 'Credit', -0.75, 1, -5000000, NULL),
+        ('CD-103', 'Credit', -1.5, 1, -50000000, NULL),
+        ('SA-101', 'Saving', 1, 1, 1000000, null);
+    \end{MySQLCode}
+
+    \begin{MySQLCode}
+        INSERT INTO bank_db.transactions
+        (transactionNumber, sourceAccount, targetAccount, transactionType, amount, time, description, employeeCode)
+        VALUES
+        (51, null, '17560918', 'OPENING', 150000000, '2017-10-15 15:28:56', 'Mo tai khoan', '14A-0003'),
+        (52, null, '17563241', 'OPENING', 195000000, '2015-08-04 09:47:11', 'Mo tai khoan', '14A-0002'),
+        (53, null, '18224191', 'OPENING', 225000000, '2019-02-22 08:11:22', 'Mo tai khoan', '14A-0005'),
+        (54, null, '51540037', 'OPENING', 741600000, '2018-12-04 07:29:15', 'Mo tai khoan', '14A-0004'),
+        (55, null, '52100967', 'OPENING', 200000000, '2015-02-28 11:05:00', 'Mo tai khoan', '14A-0004');
+    \end{MySQLCode}
     
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-accounts.png}
-        \caption{Bảng accounts}
-    \end{figure}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-branches.png}
-        \caption{Bảng branches}
-    \end{figure}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-customers.png}
-        \caption{Bảng customers}
-    \end{figure}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-employees.png}
-        \caption{Bảng employees}
-    \end{figure}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-products.png}
-        \caption{Bảng products}
-    \end{figure}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{sample-transactions.png}
-        \caption{Bảng transactions}
-    \end{figure}
-
-\end{enumerate}
+\end{itemize}
