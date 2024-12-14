@@ -8,9 +8,9 @@
 \contentsline {section}{\numberline {2.}Mô hình quan hệ}{4}{section.2.2}%
 \contentsline {chapter}{\numberline {III}Đặc tả dữ liệu}{5}{chapter.3}%
 \contentsline {section}{\numberline {1.}Dữ liệu tại mỗi bảng}{5}{section.3.1}%
-\contentsline {section}{\numberline {2.}Mối quan hệ giữa các bảng}{5}{section.3.2}%
-\contentsline {chapter}{\numberline {IV}Cài đặt}{6}{chapter.4}%
-\contentsline {section}{\numberline {1.}Tạo cơ sở dữ liệu và chèn dữ liệu}{6}{section.4.1}%
-\contentsline {section}{\numberline {2.}Truy vấn dữ liệu}{8}{section.4.2}%
-\contentsline {section}{\numberline {3.}Ràng buộc dữ liệu bằng trigger}{8}{section.4.3}%
-\contentsline {section}{\numberline {4.}Giải quyết nghiệp vụ bằng procedures}{8}{section.4.4}%
+\contentsline {section}{\numberline {2.}Mối quan hệ giữa các bảng}{8}{section.3.2}%
+\contentsline {chapter}{\numberline {IV}Cài đặt}{9}{chapter.4}%
+\contentsline {section}{\numberline {1.}Tạo cơ sở dữ liệu và chèn dữ liệu}{9}{section.4.1}%
+\contentsline {section}{\numberline {2.}Truy vấn dữ liệu}{12}{section.4.2}%
+\contentsline {section}{\numberline {3.}Ràng buộc dữ liệu bằng trigger}{12}{section.4.3}%
+\contentsline {section}{\numberline {4.}Giải quyết nghiệp vụ bằng procedures}{12}{section.4.4}%

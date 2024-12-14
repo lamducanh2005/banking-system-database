@@ -60,6 +60,7 @@ Dữ liệu khách hàng được lưu trữ tại bảng \textbf{customers} v�
 \end{center}
 
 % \subsection{Dữ liệu tài khoản}
+\newpage
 \noindent
 Dữ liệu tài khoản được lưu trữ tại bảng \textbf{accounts} với các trường dữ liệu sau:
 
@@ -169,6 +170,7 @@ Dữ liệu chi nhánh ngân hàng được lưu trữ tại bảng \textbf{bran
 
 
 % \subsection{Dữ liệu nhân viên}
+\newpage
 \noindent
 Dữ liệu nhân viên ngân hàng được lưu trữ tại bảng \textbf{employees} với các trường dữ liệu sau:
 
@@ -295,7 +297,7 @@ Dữ liệu giao dịch được lưu trữ tại bảng \textbf{transactions} v
 
 % \subsection{Dữ liệu dịch vụ tài khoản }
 \noindent
-Dữ liệu dịch vụ tài khoản được lưu trữ tại bảng \textbf{products} với các trường dữ liệu sau:
+Dữ liệu sản phẩm tài chính được lưu trữ tại bảng \textbf{products} với các trường dữ liệu sau:
 
 \renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
 \setlength{\tabcolsep}{10pt}
@@ -308,37 +310,37 @@ Dữ liệu dịch vụ tài khoản được lưu trữ tại bảng \textbf{pr
 
     \hline
     \textbf{productCode} &
-    Mã của dịch vụ &
+    Mã định danh của sản phẩm &
     varchar &
     SA-102 \\
 
     \hline
     \textbf{productType} &
-    Loại dịch vụ &
+    Kiểu sản phẩm &
     varchar &
     Saving \\
 
     \hline
     \textbf{interestRate} &
-    Lãi suất của dịch vụ &
+    Lãi suất của sản phẩm, đơn vị phần trăm &
     float &
     2 \\
 
     \hline
     \textbf{term} &
-    Thời hạn dịch vụ  &
+    Kì hạn của sản phẩm  &
     int &
     3 \\
 
     \hline
     \textbf{minAmount} &
-    Số tiền tối thiếu của dịch vụ &
+    Số dư tối thiểu để duy trì tài khoản với mức sản phẩm này &
     bigint &
     1000000 \\
 
     \hline
     \textbf{maxAmount} &
-    Số tiền tối đa của dịch vụ &
+    Số tiền tối đa để tài khoản có thể duy trì sản phẩm này &
     bigint &
     100000000 \\
     
