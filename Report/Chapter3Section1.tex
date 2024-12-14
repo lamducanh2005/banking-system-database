@@ -8,7 +8,7 @@ Dữ liệu khách hàng được lưu trữ tại bảng \textbf{customers} v�
 \setlength{\tabcolsep}{10pt}
 
 \begin{center}
-    \begin{tabular}{ | m{7em} | m{15em}| m{5em} | m{5em} | } 
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
     \hline
     \rowcolor{gray!30}
     Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
@@ -33,29 +33,315 @@ Dữ liệu khách hàng được lưu trữ tại bảng \textbf{customers} v�
 
     \hline
     \textbf{birthDate} &
-    ... &
-    ... &
-    ... \\
+    Ngày tháng năm sinh của khách hàng &
+    date &
+    09/03/2005\\
 
     \hline
-    \textbf{} &
-    ... &
-    ... &
-    ... \\
+    \textbf{phoneNumber} &
+    Số điện thoại của khách hàng &
+    varchar &
+    0987654321 \\
 
     \hline
-    \textbf{} &
-    ... &
-    ... &
-    ... \\
+    \textbf{address} &
+    Địa chỉ của khách hàng &
+    varchar &
+    Cầu Giấy, Hà Nội \\
 
     \hline
-    \textbf{} &
-    ... &
-    ... &
-    ... \\
+    \textbf{creditScore} &
+    Điểm tín dụng của khách hàng &
+    int &
+    500 \\
 
     \hline
     \end{tabular}
 \end{center}
+
+% \subsection{Dữ liệu tài khoản}
+\noindent
+Dữ liệu tài khoản được lưu trữ tại bảng \textbf{accounts} với các trường dữ liệu sau:
+
+\renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+\setlength{\tabcolsep}{10pt}
+
+\begin{center}
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
+    \hline
+    \rowcolor{gray!30}
+    Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+    \hline
+    \textbf{accountNumber} &
+    Số tài khoản, gồm 8 kí tự. &
+    varchar &
+    17560918 \\
+
+    \hline
+    \textbf{accountName} &
+    Họ và tên của người sở hữu tài khoản &
+    varchar &
+    BUI THANH DAN \\
+
+    \hline
+    \textbf{balance} &
+    Số dư tài khoản &
+    bigint &
+    5000000 \\
+
+    \hline
+    \textbf{customerID} &
+    Mã định danh của khách hàng sở hữu tài khoản &
+    varchar &
+    23020346\\
+
+    \hline
+    \textbf{productCode} &
+    Mã số sản phẩm của tài khoản &
+    varchar &
+    SA-103 \\
+
+    \hline
+    \textbf{openingBranch} &
+    Mã chi nhánh đã mở tài khoản &
+    varchar &
+    QN001 \\
+
+    \hline
+    \textbf{openingDate} &
+    Thời gian mở tài khoản &
+    datetime &
+    2017-10-15 15:28:56 \\
+
+    \hline
+    \end{tabular}
+\end{center}
+
+% \subsection{Dữ liệu chi nhánh}
+\noindent
+Dữ liệu chi nhánh ngân hàng được lưu trữ tại bảng \textbf{branches} với các trường dữ liệu sau:
+
+\renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+\setlength{\tabcolsep}{10pt}
+
+\begin{center}
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
+    \hline
+    \rowcolor{gray!30}
+    Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+    \hline
+    \textbf{branchCode} &
+    Mã chi nhánh, gồm 5 kí tự &
+    varchar &
+    HN001 \\
+
+    \hline
+    \textbf{branchName} &
+    Tên chi nhánh &
+    varchar &
+    Chi nhánh Cầu Giấy \\
+
+    \hline
+    \textbf{province} &
+    Tỉnh chi nhánh hoạt động &
+    varchar &
+    Hà Nội \\
+
+    \hline
+    \textbf{district} &
+    Huyện chi nhánh hoạt động &
+    varchar &
+    Cầu Giấy \\
+
+    \hline
+    \textbf{street} &
+    Địa chỉ đường nơi chi nhánh tọa lạc &
+    varchar &
+    Số 144, đường Xuân Thủy \\
+
+    \hline
+    \end{tabular}
+\end{center}
+
+
+
+
+% \subsection{Dữ liệu nhân viên}
+\noindent
+Dữ liệu nhân viên ngân hàng được lưu trữ tại bảng \textbf{employees} với các trường dữ liệu sau:
+
+\renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+\setlength{\tabcolsep}{10pt}
+
+\begin{center}
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
+    \hline
+    \rowcolor{gray!30}
+    Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+    \hline
+    \textbf{employeeCode} &
+    Mã nhân viên, gồm 8 kí tự &
+    varchar &
+    14A-0007 \\
+
+    \hline
+    \textbf{lastName} &
+    Họ của nhân viên &
+    varchar &
+    Trần \\
+
+    \hline
+    \textbf{firstName} &
+    Tên của nhân viên &
+    varchar &
+    Ngọc Ánh \\
+
+    \hline
+    \textbf{position} &
+    Chức vụ của nhân viên &
+    varchar &
+    Thư ký giám đốc \\
+
+    \hline
+    \textbf{department} &
+    Bộ phận nhân viên làm việc &
+    varchar &
+    Ban giám đốc \\
+
+    \hline
+    \textbf{managerCode} &
+    Mã nhân viên quản lý nhân viên này &
+    varchar &
+    14A-0006 \\
+
+    \hline
+    \textbf{branchCode} &
+    Mã chi nhánh nhân viên làm việc &
+    varchar &
+    QN001 \\
     
+    \hline
+    \end{tabular}
+\end{center}
+
+% \subsection{Dữ liệu giao dịch}
+\noindent
+Dữ liệu giao dịch được lưu trữ tại bảng \textbf{transactions} với các trường dữ liệu sau:
+
+\renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+\setlength{\tabcolsep}{10pt}
+
+\begin{center}
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
+    \hline
+    \rowcolor{gray!30}
+    Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+    \hline
+    \textbf{transactionNumber} &
+    Số thứ tự khi thực hiện giao dịch &
+    int &
+    27 \\
+
+    \hline
+    \textbf{sourceAccount} &
+    Mã tài khoản chuyển tiền &
+    varchar &
+    70001011 \\
+
+    \hline
+    \textbf{targetAccount} &
+    Mã tài khoản nhận tiền &
+    varchar &
+    69782850 \\
+
+    \hline
+    \textbf{transactionType} &
+    Loại giao dịch &
+    varchar &
+    TRANSFER \\
+
+    \hline
+    \textbf{amount} &
+    Số tiền giao dịch &
+    bigint &
+    15000000 \\
+
+    \hline
+    \textbf{time} &
+    Thời gian thực hiện giao dịch thành công &
+    datetime &
+    2011-07-15 06:01:00 \\
+
+    \hline
+    \textbf{description} &
+    Mô tả giao dịch &
+    varchar &
+    Vien Tri Tue Nhan Tao tra luong thang 6 \\
+
+    \hline
+    \textbf{employeeCode} &
+    Mã nhân viên đã thực hiện giao dịch &
+    varchar &
+    30A-0003 \\
+
+    
+    \hline
+    \end{tabular}
+\end{center}
+
+% \subsection{Dữ liệu dịch vụ tài khoản }
+\noindent
+Dữ liệu dịch vụ tài khoản được lưu trữ tại bảng \textbf{products} với các trường dữ liệu sau:
+
+\renewcommand{\arraystretch}{2} % Tăng khoảng cách dọc giữa các hàng
+\setlength{\tabcolsep}{10pt}
+
+\begin{center}
+    \begin{tabular}{ | m{9em} | m{15em}| m{5em} | m{5em} | } 
+    \hline
+    \rowcolor{gray!30}
+    Dữ liệu & Ý nghĩa & Kiểu & Minh họa \\ 
+
+    \hline
+    \textbf{productCode} &
+    Mã của dịch vụ &
+    varchar &
+    SA-102 \\
+
+    \hline
+    \textbf{productType} &
+    Loại dịch vụ &
+    varchar &
+    Saving \\
+
+    \hline
+    \textbf{interestRate} &
+    Lãi suất của dịch vụ &
+    float &
+    2 \\
+
+    \hline
+    \textbf{term} &
+    Thời hạn dịch vụ  &
+    int &
+    3 \\
+
+    \hline
+    \textbf{minAmount} &
+    Số tiền tối thiếu của dịch vụ &
+    bigint &
+    1000000 \\
+
+    \hline
+    \textbf{maxAmount} &
+    Số tiền tối đa của dịch vụ &
+    bigint &
+    100000000 \\
+    
+    \hline
+    \end{tabular}
+\end{center}
