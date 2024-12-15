@@ -29,14 +29,14 @@ TRUY VẤN KHÁCH HÀNG:
     \begin{MySQLCode}
     SELECT 
         c.customerID,
-	   CONCAT(c.lastName, ' ', c.firstName) AS customerName,
+	CONCAT(c.lastName, ' ', c.firstName) AS customerName,
         SUM(a.balance) AS totalBalance
     FROM 
         bank_db.customers c
     JOIN 
         bank_db.accounts a ON c.customerID = a.customerID
     GROUP BY 
-	   c.customerID;
+	c.customerID;
     \end{MySQLCode}
 
     \item Truy vấn tìm khách hàng có sinh nhật vào quý 4
@@ -83,7 +83,7 @@ TRUY VẤN KHÁCH HÀNG:
         CONCAT(c.lastName, ' ', c.firstName) AS customerName,
         COUNT(*) AS totalTransactions
     FROM
-	   bank_db.customers c
+	bank_db.customers c
     JOIN
         bank_db.accounts a ON c.customerID = a.customerID
     JOIN 
@@ -208,7 +208,7 @@ TRUY VẤN TÀI KHOẢN:
         );
     \end{MySQLCode}
 
-    \item Truy vẫn mỗi tài khoản đã thực hiện nhiều giao dịch chuyển tiền nhất cho tài khoản nào khác null(subquery trong from và where + aggregate functions + group by)
+    \item Truy vẫn mỗi tài khoản đã thực hiện nhiều giao dịch chuyển tiền nhất cho tài khoản nào khác null (subquery trong from và where + aggregate functions + group by)
     \begin{MySQLCode}
     SELECT 
         t1.sourceAccount, 
@@ -281,7 +281,7 @@ TRUY VẤN NHÂN VIÊN:
         bank_db.employees m ON e.managerCode = m.employeeCode;
     \end{MySQLCode}
 
-    \item : Truy vấn nhân viên và số cấp dưới họ quản lý (self join + group by + aggregate functions)
+    \item Truy vấn nhân viên và số cấp dưới họ quản lý (self join + group by + aggregate functions)
     \begin{MySQLCode}
     SELECT 
         e1.employeeCode AS managerCode,
@@ -302,7 +302,7 @@ TRUY VẤN NHÂN VIÊN:
     SELECT 
         e.employeeCode,
         CONCAT(e.lastName, ' ', e.firstName) AS employeeName,
-	   SUM(t.amount) AS totalRevenue
+	SUM(t.amount) AS totalRevenue
     FROM 
         bank_db.employees e
     JOIN 
@@ -320,7 +320,7 @@ TRUY VẤN NHÂN VIÊN:
         CONCAT(e.lastName, ' ', e.firstName) AS employeeName,
         COUNT(*) AS totalCustomers
     FROM
-	   bank_db.employees e
+	bank_db.employees e
     JOIN
         bank_db.transactions t ON e.employeeCode = t.employeeCode
     JOIN 
@@ -435,21 +435,21 @@ TRUY VẤN CHI NHÁNH:
     \item Truy vấn số tài khoản được mở tại mỗi chi nhánh (inner join + group by + aggregate functions)
     \begin{MySQLCode}
     SELECT 
-	   a.openingBranch, 
+	a.openingBranch, 
         b.branchName,
         COUNT(*) AS totalAccounts
     FROM 
-	   bank_db.accounts a
+	bank_db.accounts a
     JOIN
-	   bank_db.branches b ON a.openingBranch = b.branchCode
+	bank_db.branches b ON a.openingBranch = b.branchCode
     GROUP BY
-	   openingBranch;
+	openingBranch;
     \end{MySQLCode}
 
     \item Truy vấn số nhân viên trong từng chức vụ tại mỗi chi nhánh (inner join + group by + aggregate functions)
     \begin{MySQLCode}
     SELECT 
-	   b.branchCode,
+	b.branchCode,
         b.branchName,
         e.position,
         COUNT(*) AS totalEmployees
@@ -464,7 +464,7 @@ TRUY VẤN CHI NHÁNH:
     \item Truy vấn các chi nhánh và tên đầy đủ của giám đốc chi nhánh đó (inner join + aggregate functions)
     \begin{MySQLCode}
     SELECT 
-	   b.branchCode,
+	b.branchCode,
         b.branchName,
         CONCAT(e.lastName, ' ', e.firstName) as directorName
     FROM 
@@ -478,7 +478,7 @@ TRUY VẤN CHI NHÁNH:
     \item Truy vấn số lượng chi nhánh tại mỗi tỉnh thành (group by + aggregate functions)
     \begin{MySQLCode}
     SELECT 
-	   province,
+	province,
         COUNT(*) AS totalBranches
     FROM 
         bank_db.branches
@@ -493,15 +493,15 @@ TRUY VẤN SẢN PHẨM:
     \item Truy vấn mỗi sản phẩm có bao nhiêu tài khoản (inner join + group by + aggregate functions)
     \begin{MySQLCode}
     SELECT
-	   p.productCode,
+	p.productCode,
         p.productType,
         COUNT(*) AS totalAccounts
     FROM 
-	   bank_db.products p
+	bank_db.products p
     JOIN
-	   bank_db.accounts a ON a.productCode = p.productCode
+	bank_db.accounts a ON a.productCode = p.productCode
     GROUP BY
-	   p.productCode;
+	p.productCode;
     \end{MySQLCode}
 
     \item Truy vấn mỗi khách hàng yêu thích sản phẩm nào nhất (giả sử sản phẩm nào khách hàng có nhiều tài khoản nhất thì là yêu thích nhất)(inner join + subquery trong from + group by + aggregate functions)
